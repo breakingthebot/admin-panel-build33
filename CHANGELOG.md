@@ -32,3 +32,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added responsive mobile navigation layout: sidebar collapses into hamburger slider overlay for screen viewports <= 768px.
 - Added responsive scroll wrappers for user directory tables on mobile.
 - Added unit specs asserting form validation and users creation methods.
+
+## [0.5.0] - 2026-07-20
+
+### Added
+- Implemented real-time background task generating mock service activity latency numbers.
+- Built a responsive SVG line chart representing microservice latency variations.
+- Added transparent color gradients under the SVG latency curve.
+- Created live diagnostic stdout log stream simulating SELECT/UPDATE query logs.
+- Added unit specs asserting dynamic SVG path calculations.
