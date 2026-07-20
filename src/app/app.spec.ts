@@ -83,3 +83,53 @@ describe('App & Router Administration System', () => {
     expect(authService.secondsRemaining()).toBe(15);
   });
 });
+
+import { UsersComponent } from './components/users/users';
+
+describe('UsersComponent Management Panel', () => {
+  let component: UsersComponent;
+  let authService: AuthService;
+
+  beforeEach(() => {
+    localStorage.clear();
+    authService = new AuthService();
+    component = new UsersComponent(authService);
+  });
+
+  it('should initialize with default users list', () => {
+    expect(component.usersList().length).toBe(4);
+  });
+
+  it('should prevent non-admin user from toggling user status', () => {
+    authService.login('guest_user', 'Guest');
+    component.toggleUserStatus('usr-102');
+    expect(component.usersList().find(u => u.id === 'usr-102')?.status).toBe('Active');
+  });
+
+  it('should allow admin user to toggle status', () => {
+    authService.login('admin_user', 'Admin');
+    component.toggleUserStatus('usr-102');
+    const updatedUser = component.usersList().find(u => u.id === 'usr-102');
+    expect(updatedUser?.status).toBe('Suspended');
+  });
+
+  it('should fail user creation validation with invalid parameters', () => {
+    component.newName = '  ';
+    component.newEmail = 'invalid-email';
+    component.createUser();
+    expect(component.validationErrors().length).toBeGreaterThan(0);
+    expect(component.usersList().length).toBe(4);
+  });
+
+  it('should succeed user creation with correct parameters', () => {
+    component.newName = 'Alice Vance';
+    component.newEmail = 'alice.v@enterprise.com';
+    component.newRole = 'Developer';
+    component.newStatus = 'Active';
+    
+    component.createUser();
+    expect(component.validationErrors().length).toBe(0);
+    expect(component.usersList().length).toBe(5);
+    expect(component.usersList().find(u => u.name === 'Alice Vance')).toBeDefined();
+  });
+});

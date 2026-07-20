@@ -14,6 +14,16 @@
         class="search-input"
       />
     </div>
+
+    <!-- Create User button -->
+    <button 
+      class="btn-create-user" 
+      (click)="openCreateModal()"
+      [disabled]="!authService.isAdmin()"
+      [title]="authService.isAdmin() ? 'Register a new system user' : 'Admin privilege required'"
+    >
+      ➕ Register New User
+    </button>
   </div>
 
   <div class="users-table-wrapper shadow-sm">
@@ -32,7 +42,7 @@
         <tr *ngFor="let user of filteredUsers()">
           <td><code>{{ user.id }}</code></td>
           <td class="font-bold">{{ user.name }}</td>
-          <td>{{ user.email }}</td>
+          <td class="email-column">{{ user.email }}</td>
           <td>
             <select 
               [ngModel]="user.role" 
@@ -68,5 +78,88 @@
         </tr>
       </tbody>
     </table>
+  </div>
+
+  <!-- Create user modal overlay -->
+  <div class="modal-overlay" *ngIf="showCreateModal()">
+    <div class="modal-card user-creation-card shadow-lg">
+      <div class="modal-header">
+        <h2>➕ Register System User</h2>
+        <p>Register credentials and assign server execution roles.</p>
+      </div>
+
+      <!-- Errors list -->
+      <div class="alert-errors-list" *ngIf="validationErrors().length > 0">
+        <ul>
+          <li *ngFor="let err of validationErrors()">⚠️ {{ err }}</li>
+        </ul>
+      </div>
+
+      <form (submit)="createUser(); $event.preventDefault();" class="creation-form">
+        <div class="form-group">
+          <label for="new-name-input">Full Name</label>
+          <input 
+            type="text" 
+            id="new-name-input" 
+            [(ngModel)]="newName" 
+            name="newName"
+            placeholder="e.g. John Doe"
+            class="form-control"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="new-email-input">Email Address</label>
+          <input 
+            type="email" 
+            id="new-email-input" 
+            [(ngModel)]="newEmail" 
+            name="newEmail"
+            placeholder="e.g. john@enterprise.com"
+            class="form-control"
+            required
+          />
+        </div>
+
+        <div class="form-row-grid">
+          <div class="form-group">
+            <label for="new-role-select">Access Privilege Role</label>
+            <select 
+              id="new-role-select" 
+              [(ngModel)]="newRole" 
+              name="newRole"
+              class="form-control"
+            >
+              <option value="Administrator">Administrator</option>
+              <option value="Developer">Developer</option>
+              <option value="Analyst">Analyst</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="new-status-select">Status</label>
+            <select 
+              id="new-status-select" 
+              [(ngModel)]="newStatus" 
+              name="newStatus"
+              class="form-control"
+            >
+              <option value="Active">Active</option>
+              <option value="Suspended">Suspended</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="modal-actions-row">
+          <button type="submit" class="btn-create-submit">
+            Create User Account
+          </button>
+          <button type="button" class="btn-create-cancel" (click)="closeCreateModal()">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>

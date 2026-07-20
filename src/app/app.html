@@ -1,12 +1,21 @@
 <div class="app-layout" *ngIf="authService.isAuthenticated(); else authLayout">
+  <!-- Mobile Sidebar Backdrop -->
+  <div 
+    class="sidebar-backdrop" 
+    *ngIf="mobileSidebarOpen()" 
+    (click)="toggleMobileSidebar()"
+  ></div>
+
   <!-- Left Side Sidebar -->
-  <aside class="app-sidebar">
+  <aside class="app-sidebar" [class.mobile-open]="mobileSidebarOpen()">
     <div class="sidebar-header">
       <span class="sidebar-logo">🛡️</span>
       <div class="sidebar-brand">
         <h2>Enterprise Panel</h2>
         <span class="brand-version">v1.0.0 (Router)</span>
       </div>
+      <!-- Close button visible only on mobile -->
+      <button class="btn-sidebar-close" (click)="toggleMobileSidebar()">✕</button>
     </div>
 
     <!-- Navigation links -->
@@ -87,8 +96,14 @@
   <!-- Right Main Panel -->
   <main class="app-main">
     <header class="main-header">
+      <!-- Hamburger Toggle Button -->
+      <button class="btn-hamburger" (click)="toggleMobileSidebar()">
+        ☰
+      </button>
+      
       <!-- Breadcrumbs Component -->
-      <app-breadcrumbs></app-breadcrumbs>
+      <app-breadcrumbs class="breadcrumbs-container"></app-breadcrumbs>
+      
       <div class="header-status">
         <span class="status-dot online"></span>
         <span class="status-text">Production Server Online</span>
