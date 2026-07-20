@@ -58,6 +58,17 @@
 
     <!-- User profiles state footer -->
     <div class="sidebar-footer">
+      <div class="demo-timer-toggle-row">
+        <label for="demo-timer-checkbox">⚡ Fast Expiry Demo (15s)</label>
+        <input 
+          type="checkbox" 
+          id="demo-timer-checkbox"
+          [checked]="authService.demoMode()"
+          (change)="toggleDemoTimer($event)"
+          class="demo-checkbox-switch"
+        />
+      </div>
+
       <div class="user-info-card">
         <span class="user-avatar">👤</span>
         <div class="user-details">
@@ -89,6 +100,31 @@
       <router-outlet></router-outlet>
     </section>
   </main>
+
+  <!-- Expiry warning modal overlay -->
+  <div class="modal-overlay" *ngIf="authService.showExpiryWarning()">
+    <div class="modal-card expiry-card shadow-lg">
+      <div class="modal-header text-center">
+        <span class="warning-large-icon">⚠️</span>
+        <h2>Inactivity Expiry Warning</h2>
+        <p>Your administration session is about to expire due to inactivity security policies.</p>
+      </div>
+
+      <div class="expiry-timer-box">
+        <span class="expiry-seconds">{{ authService.secondsRemaining() }}</span>
+        <span class="expiry-seconds-label">seconds remaining</span>
+      </div>
+
+      <div class="modal-actions-row">
+        <button class="btn-keep-alive" (click)="keepSessionAlive()">
+          Extend Session Active
+        </button>
+        <button class="btn-logout-now" (click)="logout()">
+          Sign Out Now
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <ng-template #authLayout>

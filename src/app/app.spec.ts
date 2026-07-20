@@ -23,6 +23,10 @@ describe('App & Router Administration System', () => {
     authService = TestBed.inject(AuthService);
   });
 
+  afterEach(() => {
+    authService.stopSessionTimer();
+  });
+
   it('should create the main app shell component', () => {
     const fixture = TestBed.createComponent(App);
     const app = fixture.componentInstance;
@@ -53,5 +57,29 @@ describe('App & Router Administration System', () => {
     authService.logout();
     expect(authService.isAuthenticated()).toBeFalsy();
     expect(localStorage.getItem('@admin_panel/role')).toBeNull();
+  });
+
+  it('should start session countdown timer upon login', () => {
+    authService.login('admin_user', 'Admin');
+    expect(authService.secondsRemaining()).toBeGreaterThan(0);
+  });
+
+  it('should trigger warning modal when remaining seconds fall below threshold in demo mode', () => {
+    authService.toggleDemoMode(true);
+    authService.login('admin_user', 'Admin');
+    expect(authService.secondsRemaining()).toBe(15);
+    expect(authService.showExpiryWarning()).toBeFalsy();
+
+    authService.secondsRemaining.set(5);
+    authService.showExpiryWarning.set(true);
+    expect(authService.showExpiryWarning()).toBeTruthy();
+  });
+
+  it('should reset countdown timer when session is extended', () => {
+    authService.toggleDemoMode(true);
+    authService.login('admin_user', 'Admin');
+    authService.secondsRemaining.set(3);
+    authService.extendSession();
+    expect(authService.secondsRemaining()).toBe(15);
   });
 });
