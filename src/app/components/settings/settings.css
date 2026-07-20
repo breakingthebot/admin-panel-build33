@@ -1,0 +1,194 @@
+/* src/app/components/settings/settings.css */
+/* Styles for the system settings panel. */
+/* Created: 2026-07-19 */
+
+.settings-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 800px;
+}
+
+.settings-header h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.settings-header p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.settings-card {
+  background-color: var(--surface-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.settings-card h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 12px;
+}
+
+.settings-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.form-label-desc strong {
+  display: block;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.form-label-desc p {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.switch-toggle-wrapper input[type="checkbox"] {
+  width: 44px;
+  height: 22px;
+  appearance: none;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  position: relative;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.switch-toggle-wrapper input[type="checkbox"]::before {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #64748b;
+  top: 2px;
+  left: 2px;
+  transition: all 0.2s ease;
+}
+
+.switch-toggle-wrapper input[type="checkbox"]:checked {
+  background-color: rgba(99, 102, 241, 0.2);
+  border-color: #6366f1;
+}
+
+.switch-toggle-wrapper input[type="checkbox"]:checked::before {
+  background-color: #6366f1;
+  transform: translateX(22px);
+}
+
+.switch-toggle-wrapper input[type="checkbox"]:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.input-control-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.number-input {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 8px 12px;
+  border-radius: 6px;
+  width: 80px;
+  outline: none;
+  font-size: 0.9rem;
+}
+
+.number-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.input-unit {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.form-control {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  outline: none;
+  width: 100%;
+}
+
+.text-mono {
+  font-family: monospace;
+  letter-spacing: 0.05em;
+  background-color: rgba(15, 23, 42, 0.4);
+  color: #a5b4fc;
+}
+
+.save-actions-wrapper {
+  margin-top: 10px;
+}
+
+.btn-save-settings {
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  color: #ffffff;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-save-settings:hover:not(:disabled) {
+  background: linear-gradient(135deg, #4f46e5, #4338ca);
+  transform: translateY(-1px);
+}
+
+.btn-save-settings:disabled {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.3);
+  cursor: not-allowed;
+}

@@ -1,0 +1,206 @@
+/* src/app/components/dashboard/dashboard.css */
+/* Styles for the system activity overview dashboard panel. */
+/* Created: 2026-07-19 */
+
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.dashboard-header h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.dashboard-header p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.metric-card {
+  background-color: var(--surface-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.metric-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.metric-icon {
+  font-size: 1.5rem;
+}
+
+.metric-change {
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.metric-change.success {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+.metric-change.warning {
+  background-color: rgba(245, 158, 11, 0.1);
+  color: #f59e0b;
+}
+
+.metric-change.info {
+  background-color: rgba(59, 130, 246, 0.1);
+  color: #3b82f6;
+}
+
+.metric-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.metric-label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin: 0;
+  font-weight: 600;
+}
+
+.dashboard-sections {
+  display: flex;
+  gap: 24px;
+}
+
+@media (max-width: 900px) {
+  .dashboard-sections {
+    flex-direction: column;
+  }
+}
+
+.dashboard-card {
+  background-color: var(--surface-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.dashboard-card h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 12px;
+}
+
+.microservices-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.service-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+}
+
+.service-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.9rem;
+}
+
+.status-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.status-indicator.online {
+  background-color: #10b981;
+  box-shadow: 0 0 8px #10b981;
+}
+
+.status-indicator.warning {
+  background-color: #f59e0b;
+  box-shadow: 0 0 8px #f59e0b;
+}
+
+.service-speed {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+.alerts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.alert-item {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  border-left: 4px solid transparent;
+  background-color: var(--bg-secondary);
+  font-size: 0.88rem;
+}
+
+.alert-item.warning {
+  border-left-color: #f59e0b;
+}
+
+.alert-item.success {
+  border-left-color: #10b981;
+}
+
+.alert-item.danger {
+  border-left-color: #ef4444;
+}
+
+.alert-badge {
+  font-weight: 700;
+  font-size: 0.72rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  height: fit-content;
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.alert-content p {
+  margin: 0 0 4px 0;
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+
+.alert-time {
+  font-size: 0.76rem;
+  color: var(--text-secondary);
+}

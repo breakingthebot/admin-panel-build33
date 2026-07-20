@@ -1,0 +1,45 @@
+/* src/app/components/breadcrumbs/breadcrumbs.css */
+/* Styles for the dynamic breadcrumbs path indicator. */
+/* Created: 2026-07-19 */
+
+.breadcrumbs-nav {
+  padding: 8px 0;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+.breadcrumbs-list {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.breadcrumb-item {
+  display: flex;
+  align-items: center;
+}
+
+.breadcrumb-link {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.breadcrumb-link:hover {
+  color: #818cf8;
+}
+
+.breadcrumb-item-separator {
+  color: rgba(255, 255, 255, 0.2);
+  font-size: 0.8rem;
+  user-select: none;
+}
+
+.breadcrumb-active {
+  color: #a5b4fc;
+  font-weight: 600;
+}

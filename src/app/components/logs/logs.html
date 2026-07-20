@@ -1,0 +1,72 @@
+<div class="logs-container">
+  <div class="logs-header">
+    <h1>📋 Security Audit Trail</h1>
+    <p>Chronological system activity logs tracking network mutations and policy changes.</p>
+  </div>
+
+  <div class="logs-actions-bar shadow-sm">
+    <div class="search-box-container">
+      <span>🔍</span>
+      <input 
+        type="text" 
+        [(ngModel)]="searchQuery" 
+        placeholder="Filter logs by action, resource, or actor ID..." 
+        class="search-input"
+      />
+    </div>
+
+    <div class="filters-group">
+      <select 
+        [ngModel]="severityFilter()" 
+        (ngModelChange)="severityFilter.set($event)" 
+        class="select-field"
+      >
+        <option value="All">All Severities</option>
+        <option value="Info">Info Logs</option>
+        <option value="Warning">Warning Logs</option>
+        <option value="Error">Error Logs</option>
+      </select>
+
+      <button 
+        class="btn-clear-logs" 
+        (click)="clearLogs()"
+        [disabled]="!authService.isAdmin()"
+        [title]="authService.isAdmin() ? 'Clear all logs' : 'Admin privilege required'"
+      >
+        🗑️ Clear Logs
+      </button>
+    </div>
+  </div>
+
+  <div class="logs-table-wrapper shadow-sm">
+    <table class="logs-table">
+      <thead>
+        <tr>
+          <th>Timestamp</th>
+          <th>Actor ID</th>
+          <th>System Action</th>
+          <th>Resource Target</th>
+          <th>Severity</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let log of filteredLogs()">
+          <td><code>{{ log.timestamp }}</code></td>
+          <td class="font-bold">{{ log.userId }}</td>
+          <td><span class="action-tag">{{ log.action }}</span></td>
+          <td><code>{{ log.resource }}</code></td>
+          <td>
+            <span class="severity-badge" [ngClass]="log.severity.toLowerCase()">
+              {{ log.severity }}
+            </span>
+          </td>
+        </tr>
+        <tr *ngIf="filteredLogs().length === 0">
+          <td colspan="5" class="text-center empty-row">
+            No system log transactions match current search criteria.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,72 @@
+<div class="users-container">
+  <div class="users-header">
+    <h1>👥 User Accounts Directory</h1>
+    <p>Manage enterprise users, assign access level roles, and suspend accounts.</p>
+  </div>
+
+  <div class="users-actions-bar shadow-sm">
+    <div class="search-box-container">
+      <span>🔍</span>
+      <input 
+        type="text" 
+        [(ngModel)]="searchQuery" 
+        placeholder="Filter users by name, email, or role..." 
+        class="search-input"
+      />
+    </div>
+  </div>
+
+  <div class="users-table-wrapper shadow-sm">
+    <table class="users-table">
+      <thead>
+        <tr>
+          <th>User ID</th>
+          <th>Full Name</th>
+          <th>Email Address</th>
+          <th>Privilege Role</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of filteredUsers()">
+          <td><code>{{ user.id }}</code></td>
+          <td class="font-bold">{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td>
+            <select 
+              [ngModel]="user.role" 
+              (ngModelChange)="updateUserRole(user.id, $event)" 
+              class="table-select-field"
+              [disabled]="!authService.isAdmin()"
+            >
+              <option value="Administrator">Administrator</option>
+              <option value="Developer">Developer</option>
+              <option value="Analyst">Analyst</option>
+            </select>
+          </td>
+          <td>
+            <span class="user-status-badge" [ngClass]="user.status.toLowerCase()">
+              {{ user.status }}
+            </span>
+          </td>
+          <td>
+            <button 
+              class="btn-status-toggle" 
+              [ngClass]="user.status === 'Active' ? 'suspend' : 'activate'"
+              (click)="toggleUserStatus(user.id)"
+              [title]="authService.isAdmin() ? 'Toggle User Status' : 'Admin privilege required'"
+            >
+              {{ user.status === 'Active' ? '🚫 Suspend' : '✓ Activate' }}
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="filteredUsers().length === 0">
+          <td colspan="6" class="text-center empty-row">
+            No matching users found in the system registry.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

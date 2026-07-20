@@ -1,0 +1,68 @@
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h1>📈 System Activity Overview</h1>
+    <p>Real-time analytics and microservices performance monitoring logs.</p>
+  </div>
+
+  <div class="metrics-grid">
+    <div class="metric-card shadow-sm" *ngFor="let item of systemMetrics()">
+      <div class="metric-header">
+        <span class="metric-icon">{{ item.icon }}</span>
+        <span class="metric-change" [ngClass]="item.status">{{ item.change }}</span>
+      </div>
+      <h2 class="metric-value">{{ item.value }}</h2>
+      <p class="metric-label">{{ item.label }}</p>
+    </div>
+  </div>
+
+  <div class="dashboard-sections mt-lg">
+    <!-- Server Performance Simulation Widget -->
+    <div class="dashboard-card flex-1 shadow-sm">
+      <h3>💻 Microservices Status</h3>
+      <div class="microservices-list">
+        <div class="service-row">
+          <div class="service-info">
+            <span class="status-indicator online"></span>
+            <strong>Gateway Router</strong>
+          </div>
+          <span class="service-speed">12ms response</span>
+        </div>
+        <div class="service-row">
+          <div class="service-info">
+            <span class="status-indicator online"></span>
+            <strong>Auth Controller</strong>
+          </div>
+          <span class="service-speed">8ms response</span>
+        </div>
+        <div class="service-row">
+          <div class="service-info">
+            <span class="status-indicator warning"></span>
+            <strong>User SQL Database</strong>
+          </div>
+          <span class="service-speed">115ms (Handshaking...)</span>
+        </div>
+        <div class="service-row">
+          <div class="service-info">
+            <span class="status-indicator online"></span>
+            <strong>Audit Log Service</strong>
+          </div>
+          <span class="service-speed">14ms response</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Security Warnings -->
+    <div class="dashboard-card flex-1 shadow-sm">
+      <h3>🚨 Security & System Alerts</h3>
+      <div class="alerts-list">
+        <div class="alert-item" *ngFor="let alert of recentAlerts()" [ngClass]="alert.severity">
+          <div class="alert-badge">{{ alert.service }}</div>
+          <div class="alert-content">
+            <p>{{ alert.message }}</p>
+            <span class="alert-time">{{ alert.time }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

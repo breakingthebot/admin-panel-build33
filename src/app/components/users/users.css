@@ -1,0 +1,166 @@
+/* src/app/components/users/users.css */
+/* Styles for the user account directory management panel. */
+/* Created: 2026-07-19 */
+
+.users-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.users-header h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.users-header p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.users-actions-bar {
+  background-color: var(--surface-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.search-box-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 480px;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 10px 16px;
+}
+
+.search-input {
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  width: 100%;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.users-table-wrapper {
+  background-color: var(--surface-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.users-table th {
+  background-color: var(--bg-secondary);
+  color: var(--text-secondary);
+  font-weight: 700;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.users-table td {
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.users-table tr:last-child td {
+  border-bottom: none;
+}
+
+.users-table tr:hover {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+.font-bold {
+  font-weight: 600;
+}
+
+.table-select-field {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  outline: none;
+}
+
+.table-select-field:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.user-status-badge {
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.user-status-badge.active {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+.user-status-badge.suspended {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: #f87171;
+}
+
+.btn-status-toggle {
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #ffffff;
+}
+
+.btn-status-toggle.suspend {
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: #f87171;
+}
+
+.btn-status-toggle.suspend:hover {
+  background-color: rgba(239, 68, 68, 0.2);
+}
+
+.btn-status-toggle.activate {
+  background-color: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  color: #10b981;
+}
+
+.btn-status-toggle.activate:hover {
+  background-color: rgba(16, 185, 129, 0.2);
+}
+
+.empty-row {
+  color: var(--text-secondary);
+  padding: 40px !important;
+  font-style: italic;
+  text-align: center;
+}

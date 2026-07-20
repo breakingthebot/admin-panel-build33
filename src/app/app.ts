@@ -1,12 +1,32 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+// src/app/app.ts
+// Root component managing shell structure, side navigation, and auth events.
+// Created: 2026-07-19
+
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterOutlet, RouterLink, RouterLinkActive, Router } from '@angular/router';
+import { AuthService } from './services/auth';
+import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
+  imports: [
+    CommonModule, 
+    RouterOutlet, 
+    RouterLink, 
+    RouterLinkActive, 
+    BreadcrumbsComponent
+  ],
   templateUrl: './app.html',
-  styleUrl: './app.css',
+  styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('admin-panel');
+  authService = inject(AuthService);
+  router = inject(Router);
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+  }
 }

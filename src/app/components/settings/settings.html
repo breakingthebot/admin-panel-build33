@@ -1,0 +1,112 @@
+<div class="settings-container">
+  <div class="settings-header">
+    <h1>⚙️ System Administration Settings</h1>
+    <p>Configure security parameters, performance logs, API accesses, and global flags.</p>
+  </div>
+
+  <div class="settings-card shadow-sm">
+    <h3>🔒 Security Policies</h3>
+    <div class="settings-form">
+      <div class="form-row">
+        <div class="form-label-desc">
+          <strong>Enforce Multi-Factor Authentication (MFA)</strong>
+          <p>Requires verification token checks for all user log-in sessions.</p>
+        </div>
+        <div class="switch-toggle-wrapper">
+          <input 
+            type="checkbox" 
+            id="mfa-toggle" 
+            [ngModel]="enableMfa()" 
+            (ngModelChange)="enableMfa.set($event)"
+            [disabled]="!authService.isAdmin()"
+          />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-label-desc">
+          <strong>User Session Idle Expiry Time</strong>
+          <p>Duration in minutes of idle time before an automatic session logout.</p>
+        </div>
+        <div class="input-control-wrapper">
+          <input 
+            type="number" 
+            min="5" 
+            max="120" 
+            [ngModel]="sessionTimeout()" 
+            (ngModelChange)="sessionTimeout.set($event)" 
+            class="number-input"
+            [disabled]="!authService.isAdmin()"
+          />
+          <span class="input-unit">mins</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="settings-card shadow-sm">
+    <h3>🔌 External API Integration Settings</h3>
+    <div class="settings-form">
+      <div class="form-group">
+        <label for="api-key-field">Gateway Webhook Secret Token (Production)</label>
+        <div class="input-row">
+          <input 
+            type="text" 
+            id="api-key-field" 
+            [ngModel]="apiKey()" 
+            class="form-control text-mono"
+            readonly
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="settings-card shadow-sm">
+    <h3>⚙️ Server Diagnostics Toggles</h3>
+    <div class="settings-form">
+      <div class="form-row">
+        <div class="form-label-desc">
+          <strong>Trace Detailed Database Performance Logs</strong>
+          <p>Tracks timing metrics for SQL execution times and transaction sizes.</p>
+        </div>
+        <div class="switch-toggle-wrapper">
+          <input 
+            type="checkbox" 
+            id="perf-toggle" 
+            [ngModel]="enablePerformanceLogs()" 
+            (ngModelChange)="enablePerformanceLogs.set($event)"
+            [disabled]="!authService.isAdmin()"
+          />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-label-desc">
+          <strong>Global Server Maintenance Flag</strong>
+          <p>Blocks API endpoints for general users, serving a read-only site placeholder banner.</p>
+        </div>
+        <div class="switch-toggle-wrapper">
+          <input 
+            type="checkbox" 
+            id="maint-toggle" 
+            [ngModel]="maintenanceMode()" 
+            (ngModelChange)="maintenanceMode.set($event)"
+            [disabled]="!authService.isAdmin()"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="save-actions-wrapper">
+    <button 
+      class="btn-save-settings shadow-sm" 
+      (click)="saveConfig()"
+      [disabled]="!authService.isAdmin()"
+      [title]="authService.isAdmin() ? 'Save configurations' : 'Admin privilege required'"
+    >
+      💾 Save Administration Config
+    </button>
+  </div>
+</div>

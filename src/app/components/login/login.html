@@ -1,0 +1,59 @@
+<div class="login-wrapper">
+  <div class="login-glow-bg"></div>
+  <div class="login-card shadow-lg">
+    <div class="login-header">
+      <span class="login-logo">🛡️</span>
+      <h2>Enterprise Admin Portal</h2>
+      <p>Please authenticate to access the administration dashboard panels.</p>
+    </div>
+
+    <div class="alert-error" *ngIf="errorMessage()">
+      <span>⚠️</span> {{ errorMessage() }}
+    </div>
+
+    <form (submit)="login(); $event.preventDefault();" class="login-form">
+      <div class="form-group">
+        <label for="username-input">Username</label>
+        <input 
+          type="text" 
+          id="username-input" 
+          [(ngModel)]="username" 
+          name="username" 
+          placeholder="Enter username" 
+          class="form-control"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="role-select">Access Privilege Level</label>
+        <select 
+          id="role-select" 
+          [(ngModel)]="selectedRole" 
+          name="selectedRole" 
+          class="form-control"
+        >
+          <option value="Guest">Guest Viewer (Read-only Dashboard)</option>
+          <option value="Admin">Administrator (Full Dashboard Access)</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn-login-submit">
+        Authenticate & Sign In
+      </button>
+    </form>
+
+    <div class="login-divider">
+      <span>OR QUICK SIGN IN</span>
+    </div>
+
+    <div class="quick-login-grid">
+      <button class="btn-quick-fill admin" (click)="quickFill('Admin')" type="button">
+        👑 Sign In as Admin
+      </button>
+      <button class="btn-quick-fill guest" (click)="quickFill('Guest')" type="button">
+        👀 Sign In as Guest
+      </button>
+    </div>
+  </div>
+</div>
