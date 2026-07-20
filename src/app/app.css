@@ -107,6 +107,105 @@
   font-size: 0.75rem;
 }
 
+/* Sidebar Role Elevation Card styling */
+.sidebar-elevation-card {
+  margin: 0 16px 16px 16px;
+  background-color: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  padding: 16px;
+  font-size: 0.82rem;
+  color: #94a3b8;
+}
+
+.elevation-none p {
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-request-elevation {
+  width: 100%;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  color: #0f172a;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-request-elevation:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+.elevation-pending {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #fbbf24;
+  font-weight: 600;
+}
+
+.spinner-icon {
+  font-size: 1.1rem;
+  animation: rotate-spinner 2s infinite linear;
+}
+
+@keyframes rotate-spinner {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.elevation-approved {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #10b981;
+}
+
+.elevation-check {
+  font-size: 1.3rem;
+  animation: pulse-elevated 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse-elevated {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 2px rgba(16, 185, 129, 0.3)); }
+  50% { transform: scale(1.15); filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.6)); }
+}
+
+.elevation-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.elevation-details strong {
+  color: #f8fafc;
+  font-size: 0.85rem;
+}
+
+.elevation-timer {
+  font-size: 0.72rem;
+  color: #3b82f6;
+  font-family: monospace;
+  font-weight: 700;
+}
+
+.elevation-denied {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #f87171;
+  font-weight: 600;
+}
+
 .sidebar-footer {
   padding: 24px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);

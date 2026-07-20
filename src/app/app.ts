@@ -59,4 +59,8 @@ export class App {
   toggleMobileSidebar(): void {
     this.mobileSidebarOpen.update(val => !val);
   }
+
+  triggerElevation(): void {
+    this.authService.requestAdminElevation();
+  }
 }

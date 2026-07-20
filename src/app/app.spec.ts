@@ -15,7 +15,7 @@ describe('App & Router Administration System', () => {
     await TestBed.configureTestingModule({
       imports: [App],
       providers: [
-        provideRouter([]),
+        provideRouter([{ path: 'dashboard', component: class {} }]),
         AuthService
       ]
     }).compileComponents();
@@ -90,10 +90,17 @@ describe('UsersComponent Management Panel', () => {
   let component: UsersComponent;
   let authService: AuthService;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     localStorage.clear();
-    authService = new AuthService();
-    component = new UsersComponent(authService);
+    await TestBed.configureTestingModule({
+      providers: [
+        provideRouter([{ path: 'dashboard', component: class {} }]),
+        AuthService,
+        UsersComponent
+      ]
+    });
+    authService = TestBed.inject(AuthService);
+    component = TestBed.inject(UsersComponent);
   });
 
   it('should initialize with default users list', () => {
@@ -170,9 +177,16 @@ describe('LogsComponent Auditing and CSV Export', () => {
   let component: LogsComponent;
   let authService: AuthService;
 
-  beforeEach(() => {
-    authService = new AuthService();
-    component = new LogsComponent(authService);
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      providers: [
+        provideRouter([{ path: 'dashboard', component: class {} }]),
+        AuthService,
+        LogsComponent
+      ]
+    });
+    authService = TestBed.inject(AuthService);
+    component = TestBed.inject(LogsComponent);
   });
 
   it('should load default audit log list', () => {
@@ -195,5 +209,31 @@ describe('LogsComponent Auditing and CSV Export', () => {
     authService.login('guest_user', 'Guest');
     component.clearLogs();
     expect(component.logsList().length).toBe(5);
+  });
+
+  it('should initialize elevation status with None', () => {
+    expect(authService.elevationStatus()).toBe('None');
+  });
+
+  it('should transition elevation status to Pending upon request', () => {
+    authService.login('guest_user', 'Guest');
+    authService.requestAdminElevation();
+    expect(authService.elevationStatus()).toBe('Pending');
+  });
+
+  it('should transition to Approved and elevate role to Admin when approved', () => {
+    authService.login('guest_user', 'Guest');
+    authService.approveElevation();
+    expect(authService.elevationStatus()).toBe('Approved');
+    expect(authService.activeRole()).toBe('Admin');
+    expect(authService.elevationSecondsRemaining()).toBe(30);
+  });
+
+  it('should revert back to Guest and clear status when demoted', () => {
+    authService.login('guest_user', 'Guest');
+    authService.approveElevation();
+    authService.demoteSession();
+    expect(authService.activeRole()).toBe('Guest');
+    expect(authService.elevationStatus()).toBe('None');
   });
 });

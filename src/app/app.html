@@ -65,6 +65,38 @@
       </ul>
     </nav>
 
+    <!-- Role Elevation Section inside Sidebar -->
+    <div class="sidebar-elevation-card" *ngIf="authService.activeRole() === 'Guest' || authService.elevationStatus() === 'Approved'">
+      <!-- Status: None (Show Request Button) -->
+      <div class="elevation-none" *ngIf="authService.elevationStatus() === 'None'">
+        <p>🔒 Admin sections locked</p>
+        <button class="btn-request-elevation" (click)="triggerElevation()">
+          🔓 Request Admin Elevation
+        </button>
+      </div>
+
+      <!-- Status: Pending -->
+      <div class="elevation-pending animate-pulse" *ngIf="authService.elevationStatus() === 'Pending'">
+        <span class="spinner-icon">⏳</span>
+        <span>Awaiting approval...</span>
+      </div>
+
+      <!-- Status: Approved -->
+      <div class="elevation-approved" *ngIf="authService.elevationStatus() === 'Approved'">
+        <span class="elevation-check">⚡</span>
+        <div class="elevation-details">
+          <strong>Admin Active (Temp)</strong>
+          <span class="elevation-timer">Demotion in: {{ authService.elevationSecondsRemaining() }}s</span>
+        </div>
+      </div>
+
+      <!-- Status: Denied -->
+      <div class="elevation-denied" *ngIf="authService.elevationStatus() === 'Denied'">
+        <span class="elevation-cross">❌</span>
+        <span>Elevation Denied</span>
+      </div>
+    </div>
+
     <!-- User profiles state footer -->
     <div class="sidebar-footer">
       <div class="demo-timer-toggle-row">
