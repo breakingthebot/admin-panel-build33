@@ -133,3 +133,33 @@ describe('UsersComponent Management Panel', () => {
     expect(component.usersList().find(u => u.name === 'Alice Vance')).toBeDefined();
   });
 });
+
+import { DashboardComponent } from './components/dashboard/dashboard';
+
+describe('DashboardComponent Telemetry and Graphing', () => {
+  let component: DashboardComponent;
+
+  beforeEach(() => {
+    component = new DashboardComponent();
+  });
+
+  afterEach(() => {
+    component.ngOnDestroy();
+  });
+
+  it('should initialize with starting metrics and alerts data', () => {
+    expect(component.systemMetrics().length).toBe(4);
+    expect(component.recentAlerts().length).toBe(4);
+  });
+
+  it('should calculate SVG line paths dynamically from latency arrays', () => {
+    const path = component.svgLinePath();
+    expect(path).toContain('M');
+    expect(path).toContain('L');
+  });
+
+  it('should compute closed filled SVG background area paths correctly', () => {
+    const areaPath = component.svgAreaPath();
+    expect(areaPath).toContain('Z');
+  });
+});

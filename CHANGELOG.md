@@ -22,3 +22,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added demo fast-expiry toggle selector (15-second timer) to the sidebar footer layout.
 - Added session keep-alive extend actions, updating the seconds countdown dynamically.
 - Added unit specs asserting timer updates and caching.
+
+## [0.4.0] - 2026-07-20
+
+### Added
+- Created a form-validated `➕ Register New User` modal dialog in User Admin panel.
+- Implemented client-side validations for email format matching and name length constraints.
+- Integrated LocalStorage persistence for user list mutations.
+- Added responsive mobile navigation layout: sidebar collapses into hamburger slider overlay for screen viewports <= 768px.
+- Added responsive scroll wrappers for user directory tables on mobile.
+- Added unit specs asserting form validation and users creation methods.

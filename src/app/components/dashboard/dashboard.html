@@ -1,68 +1,123 @@
 <div class="dashboard-container">
   <div class="dashboard-header">
-    <h1>📈 System Activity Overview</h1>
-    <p>Real-time analytics and microservices performance monitoring logs.</p>
+    <h1>📈 Telemetry Overview</h1>
+    <p>Operational metrics, microservice latency statistics, and diagnostic activity logs.</p>
   </div>
 
+  <!-- Metric widgets row -->
   <div class="metrics-grid">
-    <div class="metric-card shadow-sm" *ngFor="let item of systemMetrics()">
+    <div class="metric-card shadow-sm" *ngFor="let metric of systemMetrics()">
       <div class="metric-header">
-        <span class="metric-icon">{{ item.icon }}</span>
-        <span class="metric-change" [ngClass]="item.status">{{ item.change }}</span>
+        <span class="metric-icon">{{ metric.icon }}</span>
+        <span class="metric-change" [ngClass]="metric.status">{{ metric.change }}</span>
       </div>
-      <h2 class="metric-value">{{ item.value }}</h2>
-      <p class="metric-label">{{ item.label }}</p>
+      <div class="metric-body">
+        <h3 class="metric-value">{{ metric.value }}</h3>
+        <p class="metric-label">{{ metric.label }}</p>
+      </div>
     </div>
   </div>
 
-  <div class="dashboard-sections mt-lg">
-    <!-- Server Performance Simulation Widget -->
-    <div class="dashboard-card flex-1 shadow-sm">
-      <h3>💻 Microservices Status</h3>
-      <div class="microservices-list">
-        <div class="service-row">
-          <div class="service-info">
-            <span class="status-indicator online"></span>
-            <strong>Gateway Router</strong>
-          </div>
-          <span class="service-speed">12ms response</span>
+  <!-- Realtime Analytics section -->
+  <div class="analytics-grid">
+    <!-- Latency SVG graph card -->
+    <div class="analytics-card latency-chart-card shadow-sm">
+      <div class="card-header">
+        <h3>📈 Live Response Latency</h3>
+        <span class="live-dot-pulse">Live</span>
+      </div>
+      
+      <div class="chart-container">
+        <!-- Responsive SVG graph -->
+        <svg viewBox="0 0 600 160" width="100%" height="100%" class="latency-svg">
+          <!-- Gradients definition -->
+          <defs>
+            <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#6366f1" stop-opacity="0.35" />
+              <stop offset="100%" stop-color="#6366f1" stop-opacity="0.00" />
+            </linearGradient>
+            <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#4f46e5" />
+              <stop offset="50%" stop-color="#6366f1" />
+              <stop offset="100%" stop-color="#ec4899" />
+            </linearGradient>
+          </defs>
+
+          <!-- Grid Lines -->
+          <line x1="10" y1="10" x2="590" y2="10" stroke="rgba(255,255,255,0.04)" stroke-dasharray="4 4" />
+          <line x1="10" y1="50" x2="590" y2="50" stroke="rgba(255,255,255,0.04)" stroke-dasharray="4 4" />
+          <line x1="10" y1="90" x2="590" y2="90" stroke="rgba(255,255,255,0.04)" stroke-dasharray="4 4" />
+          <line x1="10" y1="130" x2="590" y2="130" stroke="rgba(255,255,255,0.04)" stroke-dasharray="4 4" />
+          <line x1="10" y1="150" x2="590" y2="150" stroke="rgba(255,255,255,0.08)" />
+
+          <!-- Filled Area Under Curve -->
+          <path [attr.d]="svgAreaPath()" fill="url(#areaGrad)" />
+
+          <!-- Main Latency Line -->
+          <path [attr.d]="svgLinePath()" fill="none" stroke="url(#lineGrad)" stroke-width="3" stroke-linecap="round" />
+        </svg>
+
+        <!-- Chart Grid Labels -->
+        <div class="chart-y-labels">
+          <span>160ms</span>
+          <span>80ms</span>
+          <span>0ms</span>
         </div>
-        <div class="service-row">
-          <div class="service-info">
-            <span class="status-indicator online"></span>
-            <strong>Auth Controller</strong>
-          </div>
-          <span class="service-speed">8ms response</span>
-        </div>
-        <div class="service-row">
-          <div class="service-info">
-            <span class="status-indicator warning"></span>
-            <strong>User SQL Database</strong>
-          </div>
-          <span class="service-speed">115ms (Handshaking...)</span>
-        </div>
-        <div class="service-row">
-          <div class="service-info">
-            <span class="status-indicator online"></span>
-            <strong>Audit Log Service</strong>
-          </div>
-          <span class="service-speed">14ms response</span>
-        </div>
+      </div>
+
+      <div class="chart-footer-row">
+        <span>24s ago</span>
+        <span>12s ago</span>
+        <span>now (2s updates)</span>
       </div>
     </div>
 
-    <!-- Recent Security Warnings -->
-    <div class="dashboard-card flex-1 shadow-sm">
-      <h3>🚨 Security & System Alerts</h3>
-      <div class="alerts-list">
-        <div class="alert-item" *ngFor="let alert of recentAlerts()" [ngClass]="alert.severity">
-          <div class="alert-badge">{{ alert.service }}</div>
-          <div class="alert-content">
-            <p>{{ alert.message }}</p>
-            <span class="alert-time">{{ alert.time }}</span>
-          </div>
+    <!-- Realtime Diagnostic Logs -->
+    <div class="analytics-card logs-stream-card shadow-sm">
+      <div class="card-header">
+        <h3>📺 Diagnostic Log Stream</h3>
+        <span class="terminal-badge">stdout</span>
+      </div>
+
+      <div class="terminal-box">
+        <div class="log-entry-row" *ngFor="let log of liveLogs()" [ngClass]="log.status">
+          <span class="log-time">[{{ log.time }}]</span>
+          <span class="log-service">{{ log.service }}:</span>
+          <span class="log-msg">{{ log.message }}</span>
+          <span class="log-latency-badge" [ngClass]="log.status">{{ log.latency }}</span>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Recent security warning bulletins -->
+  <div class="recent-alerts-card shadow-sm">
+    <div class="card-header">
+      <h3>⚠️ Security Access Bulletins</h3>
+    </div>
+    <div class="alerts-table-wrapper">
+      <table class="alerts-table">
+        <thead>
+          <tr>
+            <th>Module Service</th>
+            <th>Telemetry Alert Detail</th>
+            <th>Duration</th>
+            <th>Level</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let alert of recentAlerts()">
+            <td><code>{{ alert.service }}</code></td>
+            <td>{{ alert.message }}</td>
+            <td class="text-secondary">{{ alert.time }}</td>
+            <td>
+              <span class="severity-badge" [ngClass]="alert.severity">
+                {{ alert.severity }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
