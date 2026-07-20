@@ -5,6 +5,29 @@
   </div>
 
   <div class="settings-card shadow-sm">
+    <h3>🎨 Visual Appearance Settings</h3>
+    <div class="settings-form">
+      <div class="form-row">
+        <div class="form-label-desc">
+          <strong>Select Application Color Theme</strong>
+          <p>Toggle between Sleek Dark Mode and Clean Light Mode profiles.</p>
+        </div>
+        <div class="input-control-wrapper">
+          <select 
+            [(ngModel)]="selectedTheme" 
+            name="selectedTheme"
+            class="select-field"
+            [disabled]="!authService.isAdmin()"
+          >
+            <option value="dark">Sleek Dark Mode 🌙</option>
+            <option value="light">Clean Light Mode ☀️</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="settings-card shadow-sm">
     <h3>🔒 Security Policies</h3>
     <div class="settings-form">
       <div class="form-row">

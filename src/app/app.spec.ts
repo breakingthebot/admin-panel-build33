@@ -237,3 +237,53 @@ describe('LogsComponent Auditing and CSV Export', () => {
     expect(authService.elevationStatus()).toBe('None');
   });
 });
+
+import { SettingsComponent } from './components/settings/settings';
+import { ThemeService } from './services/theme';
+
+describe('SettingsComponent and ThemeService Toggling', () => {
+  let component: SettingsComponent;
+  let authService: AuthService;
+  let themeService: ThemeService;
+
+  beforeEach(async () => {
+    localStorage.clear();
+    await TestBed.configureTestingModule({
+      providers: [
+        provideRouter([{ path: 'dashboard', component: class {} }]),
+        AuthService,
+        ThemeService,
+        SettingsComponent
+      ]
+    });
+    authService = TestBed.inject(AuthService);
+    themeService = TestBed.inject(ThemeService);
+    component = TestBed.inject(SettingsComponent);
+  });
+
+  it('should load initial theme configuration values', () => {
+    expect(themeService.activeTheme()).toBe('dark');
+    expect(component.selectedTheme).toBe('dark');
+  });
+
+  it('should toggle theme from dark to light mode', () => {
+    themeService.toggleTheme();
+    expect(themeService.activeTheme()).toBe('light');
+    expect(localStorage.getItem('@admin_panel/theme')).toBe('light');
+  });
+
+  it('should update theme configuration upon admin settings save', () => {
+    authService.login('admin_user', 'Admin');
+    component.selectedTheme = 'light';
+    component.saveConfig();
+    expect(themeService.activeTheme()).toBe('light');
+    expect(localStorage.getItem('@admin_panel/theme')).toBe('light');
+  });
+
+  it('should prevent guest from saving theme configuration settings', () => {
+    authService.login('guest_user', 'Guest');
+    component.selectedTheme = 'light';
+    component.saveConfig();
+    expect(themeService.activeTheme()).toBe('dark');
+  });
+});

@@ -2,10 +2,11 @@
 // Settings configuration controller permitting system-wide feature toggle mutations.
 // Created: 2026-07-19
 
-import { Component, signal } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth';
+import { ThemeService, AppTheme } from '../../services/theme';
 
 @Component({
   selector: 'app-settings',
@@ -15,13 +16,21 @@ import { AuthService } from '../../services/auth';
   styleUrl: './settings.css'
 })
 export class SettingsComponent {
+  themeService = inject(ThemeService);
+  authService = inject(AuthService);
+
   enableMfa = signal(true);
   enablePerformanceLogs = signal(false);
   maintenanceMode = signal(false);
   sessionTimeout = signal(30);
   apiKey = signal('pk_live_51M7Ew...redacted');
 
-  constructor(public authService: AuthService) {
+  // Theme selection property
+  selectedTheme: AppTheme = 'dark';
+
+  constructor() {
+    this.selectedTheme = this.themeService.activeTheme();
+
     const cachedMfa = localStorage.getItem('@admin_panel/mfa');
     const cachedPerf = localStorage.getItem('@admin_panel/perf');
     const cachedMaint = localStorage.getItem('@admin_panel/maint');
@@ -39,6 +48,9 @@ export class SettingsComponent {
       return;
     }
     
+    // Save theme configuration instantly
+    this.themeService.setTheme(this.selectedTheme);
+
     localStorage.setItem('@admin_panel/mfa', String(this.enableMfa()));
     localStorage.setItem('@admin_panel/perf', String(this.enablePerformanceLogs()));
     localStorage.setItem('@admin_panel/maint', String(this.maintenanceMode()));
