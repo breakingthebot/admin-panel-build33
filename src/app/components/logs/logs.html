@@ -15,17 +15,47 @@
       />
     </div>
 
-    <div class="filters-group">
-      <select 
-        [ngModel]="severityFilter()" 
-        (ngModelChange)="severityFilter.set($event)" 
-        class="select-field"
+    <!-- Severity Filter Button Tabs -->
+    <div class="tabs-group">
+      <button 
+        class="tab-btn" 
+        [class.active]="severityFilter() === 'All'" 
+        (click)="setSeverityFilter('All')"
       >
-        <option value="All">All Severities</option>
-        <option value="Info">Info Logs</option>
-        <option value="Warning">Warning Logs</option>
-        <option value="Error">Error Logs</option>
-      </select>
+        All
+      </button>
+      <button 
+        class="tab-btn info" 
+        [class.active]="severityFilter() === 'Info'" 
+        (click)="setSeverityFilter('Info')"
+      >
+        Info
+      </button>
+      <button 
+        class="tab-btn warning" 
+        [class.active]="severityFilter() === 'Warning'" 
+        (click)="setSeverityFilter('Warning')"
+      >
+        Warning
+      </button>
+      <button 
+        class="tab-btn error" 
+        [class.active]="severityFilter() === 'Error'" 
+        (click)="setSeverityFilter('Error')"
+      >
+        Error
+      </button>
+    </div>
+
+    <!-- Action buttons group -->
+    <div class="filters-group">
+      <button 
+        class="btn-export-logs"
+        (click)="exportToCSV()"
+        [title]="'Export filtered logs to CSV format'"
+      >
+        📥 Export CSV
+      </button>
 
       <button 
         class="btn-clear-logs" 

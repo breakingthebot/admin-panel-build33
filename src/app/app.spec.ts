@@ -163,3 +163,37 @@ describe('DashboardComponent Telemetry and Graphing', () => {
     expect(areaPath).toContain('Z');
   });
 });
+
+import { LogsComponent } from './components/logs/logs';
+
+describe('LogsComponent Auditing and CSV Export', () => {
+  let component: LogsComponent;
+  let authService: AuthService;
+
+  beforeEach(() => {
+    authService = new AuthService();
+    component = new LogsComponent(authService);
+  });
+
+  it('should load default audit log list', () => {
+    expect(component.logsList().length).toBe(5);
+  });
+
+  it('should filter logs by severity level', () => {
+    component.setSeverityFilter('Error');
+    expect(component.filteredLogs().length).toBe(1);
+    expect(component.filteredLogs()[0].severity).toBe('Error');
+  });
+
+  it('should filter logs by query string', () => {
+    component.searchQuery = 'usr-102';
+    expect(component.filteredLogs().length).toBe(1);
+    expect(component.filteredLogs()[0].userId).toBe('usr-102');
+  });
+
+  it('should prevent non-admin from clearing logs', () => {
+    authService.login('guest_user', 'Guest');
+    component.clearLogs();
+    expect(component.logsList().length).toBe(5);
+  });
+});

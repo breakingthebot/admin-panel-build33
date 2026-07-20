@@ -52,6 +52,10 @@ export class LogsComponent {
     });
   });
 
+  setSeverityFilter(filter: 'All' | 'Info' | 'Warning' | 'Error'): void {
+    this.severityFilter.set(filter);
+  }
+
   clearLogs(): void {
     if (!this.authService.isAdmin()) {
       alert('Access Denied: Only Administrators can clear audit logs.');
@@ -61,5 +65,44 @@ export class LogsComponent {
     if (confirm('Are you sure you want to permanently delete all system audit logs?')) {
       this.logsList.set([]);
     }
+  }
+
+  exportToCSV(): void {
+    const logs = this.filteredLogs();
+    if (logs.length === 0) {
+      alert('No logs available to export.');
+      return;
+    }
+
+    // CSV Headers
+    const headers = ['Timestamp', 'User ID', 'Action', 'Resource Affected', 'Severity'];
+    
+    // CSV Rows
+    const rows = logs.map(log => [
+      log.timestamp,
+      log.userId,
+      log.action,
+      log.resource,
+      log.severity
+    ]);
+
+    // Format fields with quotes to handle commas
+    const csvContent = [
+      headers.join(','),
+      ...rows.map(row => row.map(val => `"${val.replace(/"/g, '""')}"`).join(','))
+    ].join('\n');
+
+    // Create file blob and trigger browser download
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    
+    link.setAttribute('href', url);
+    link.setAttribute('download', `system_audit_logs_${new Date().toISOString().split('T')[0]}.csv`);
+    link.style.visibility = 'hidden';
+    
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 }
