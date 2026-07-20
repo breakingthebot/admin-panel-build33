@@ -41,3 +41,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added transparent color gradients under the SVG latency curve.
 - Created live diagnostic stdout log stream simulating SELECT/UPDATE query logs.
 - Added unit specs asserting dynamic SVG path calculations.
+
+## [0.6.0] - 2026-07-20
+
+### Added
+- Created temporary Administrator role elevation request workflow for Guest users.
+- Simulated microservices background worker queues automatically approving elevation after 3 seconds.
+- Setup active demotion intervals dropping admin status back to Guest role after 30 seconds.
+- Added visual countdown timer labels and spinner indicators inside the sidebar header.
+- Added unit specs asserting elevation status transitions and route navigate triggers.
