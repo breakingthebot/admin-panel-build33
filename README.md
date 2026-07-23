@@ -31,7 +31,8 @@ npm run start
 Navigate to `http://localhost:4200` to interact with the admin panel.
 
 ## Deployed
-*To be deployed on Vercel*
+- **Vercel Production App**: [https://admin-panel-build33.vercel.app](https://admin-panel-build33.vercel.app)
+- **GitHub Repository**: [https://github.com/breakingthebot/admin-panel-build33](https://github.com/breakingthebot/admin-panel-build33)
 
 ## Architecture Notes
 To keep initial load speeds premium, all routes (Dashboard, Users, Audit Logs, Settings) are loaded lazily. Route guards protect secure panels, querying the client-side Authentication state context to allow or deny entrance. A central Breadcrumb component dynamically inspects route structures to build navigation hierarchy paths.
